@@ -1,0 +1,76 @@
+# task 2  Predict the optimum number of clusters
+# import
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn import datasets
+
+#data import
+iris=datasets.load_iris()
+iris_1=pd.DataFrame(iris.data,columns=iris.feature_names)
+iris_1.head()
+
+#Data informatiom
+iris_1.info()
+
+#data describe
+iris_1.describe()
+
+#distributiom plot for petallength (cm)
+import matplotlib.pyplot as plt
+sns.distplot(iris_1["petal length (cm)"])
+plt.xlabel("petal length (cm)")
+plt.ylabel("Probability")
+plt.title("Distribution plot")
+plt.show()
+
+#distributiom plot for SepalWidthCm
+import matplotlib.pyplot as plt
+sns.distplot(iris_1["sepal width (cm)"])
+plt.xlabel("SepalWidth(cm)")
+plt.ylabel("Probability")
+plt.title("Distribution plot")
+plt.show()
+
+
+#pairplot
+sns.pairplot(iris_1)
+plt.show()
+
+from sklearn.preprocessing import StandardScaler
+ss=StandardScaler()
+iris_2=ss.fit_transform(iris_1)
+iris_2=pd.DataFrame(iris_2)
+iris_2.columns=iris_1.columns
+iris_2.head()
+
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+kmeans=KMeans(random_state=0)
+from sklearn.decomposition import PCA
+pca=PCA()
+pca.fit(iris_1)
+
+#Eigen Valus
+pd.DataFrame({"eigen_values":pca.explained_variance_,
+              "proportion explained":pca.explained_variance_ratio_,
+              "cumulative proportion explained":np.cumsum(pca.explained_variance_ratio_)})
+
+#Elbow Graph
+plt.plot(range(1,10),ab)
+plt.title("Elbow Graph")
+plt.xlabel("Number of Cluster (k)")
+plt.ylabel("ab")
+plt.show()
+kmeans=KMeans(n_clusters=3)
+ymeans=kmeans.fit_predict(iris_1)
+ymeans
+
+#pair plot
+import seaborn as sns
+sns.heatmap(iris_1.corr(),annot = True,fmt="2f",cmap="vlag_r",center=0);
+
+#Box plot
+iris_1.plot(kind="box",subplots=True,layout=(2,2),sharex=False,figsize=(12,8))
+plt.show()
